@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="http://at.alicdn.com/t/font_757113_1ifxiwmfafu.css">
+    <style>
+       *{
+           margin: 0;
+           padding: 0;
+           box-sizing: border-box;
+       }
+       html,body{
+           width: 100%;
+           height: 100%;
+       }
+       .bgc{
+           
+           height: 100%;
+           width: 100%;
+           background: white center center no-repeat;
+       }
+       .muiscbox{
+           width: 350px;
+           height: 200px;
+           border: 1px solid red;
+           position: absolute;
+             left: 50%;
+             top: 50%;
+             transform: translate(-50%, -75%);
+             text-align: center;
+             padding-top: 30px;          
+       }
+       .bar > .progress-bar1{
+             border: 2px solid #adadad;
+             width: 250px;
+             margin: 30px auto;
+       }
+       .bar > .progress-bar2{
+             border: 2px solid pink;
+             width: 0px;
+             max-width: 255px;
+             position: absolute;
+             top: 106px;
+             left: 49px;
+             
+       }
+       .bar > .time{
+        position: absolute;
+             left: 77%;
+             top: 55%;
+       }
+       .btm > span{
+           margin-left: 5px;
+           margin-right: 5px;
+           font-size: 30px;
+           color: pink;
+       }
+
+
+    </style>
+</head>
+<body>
+    <div class="bgc">
+        <div class="muiscbox">
+            <h3>111</h3>
+            <p>333</p>
+            <div class="bar">
+                <div class="progress-bar1"></div>
+                <div class="progress-bar2"></div>
+                <div class="time">0:00</div>
+                <div class="btm">
+                    <span class="iconfont icon-shangyishou"></span>
+                    <span class="fa iconfont icon-zanting"></span>
+                    <span class="iconfont icon-xiayishou"></span>
+                </div>
+            </div>
+            <ul>
+
+            </ul>
+        </div>
+    </div>
+    <script>
+            var parameter = 0
+            var playpause = $('.fa')
+            var cut1 = $('.icon-shangyishou')
+            var cut2 = $('.icon-xiayishou')
+            var musiclist = [
+                {"src":"http://mp3.djwma.com/mp3/爆袭全站欢快节奏感觉那是杠杠滴.mp3" ,
+                 "title" :  "歌曲1" ,
+                 "name" : "张三"
+                },
+                {"src":"http://mp3.djwma.com/mp3/欢快旋律电鼓享受顶级潮流魅力舞曲.mp3" ,
+                 "title" :  "歌曲2" ,
+                 "name" : "李四"
+                },
+                {"src":"http://mp3.djwma.com/mp3/欢快女唱唯有独特才能出众走红全网.mp3" ,
+                 "title" :  "歌曲3" ,
+                 "name" : "王五"
+                }
+               ]
+               var audioObject = new Audio(musiclist[parameter].src)
+               audioObject.autoplay = true
+               
+               
+               function $(elements){
+                   return document.querySelector(elements)
+               }
+               audioObject.ontimeupdate = function(){
+               $('.bar .progress-bar2').style.width = (audioObject.currentTime/audioObject.duration)*250 + 'px'
+               var minutes = parseInt(audioObject.currentTime/60) 
+               var seconds = parseInt(audioObject.currentTime%60) + ''
+               seconds = seconds.length == 2? seconds:'0' + seconds
+               $('.bar .time').innerText = minutes + ':' + seconds
+               $('h3').innerText = musiclist[parameter].title
+               $('p').innerText = musiclist[parameter].name
+              }
+              playpause.onclick = function(){ 
+                  if(playpause.classList.contains('icon-zanting')){
+                      audioObject.pause()
+                      playpause.classList.remove('icon-zanting')
+                      playpause.classList.add('icon-bofang')
+                      
+                  }else{
+                      audioObject.play()
+                      playpause.classList.remove('icon-bofang')
+                      playpause.classList.add('icon-zanting')
+                      
+                  }
+               }
+               cut1.onclick = function(){
+                   
+                      parameter = ((--parameter)+musiclist.length)%(musiclist.length)
+                      audioObject.src = musiclist[parameter].src
+                      
+               }
+                cut2.onclick = function(){
+                   
+                   parameter = (++parameter)%(musiclist.length)
+                   audioObject.src = musiclist[parameter].src
+                   
+             }
+             
+              $('.bar .progress-bar1').onclick = function(e){
+                  $('.bar .progress-bar2').style.width = e.offsetX + 'px'
+                  audioObject.currentTime = (e.offsetX/250) * audioObject.duration
+              }
+              
+              $('.bar .progress-bar2').onclick = function(e){
+                  $('.bar .progress-bar2').style.width = e.offsetX + 'px'
+                  audioObject.currentTime = (e.offsetX/250) * audioObject.duration
+              }
+              audioObject.onended = function(){
+                 parameter = (++parameter)%(musiclist.length)
+                 audioObject.src = musiclist[parameter].src
+                 console.log(audioObject.src)
+                 
+                   
+              }
+              
+      
+    </script>
+</body>
+</html>

@@ -1,0 +1,14 @@
+[
+    {"src":"http://mp3.djwma.com/mp3/爆袭全站欢快节奏感觉那是杠杠滴.mp3" ,
+        "title" :  "歌曲1" ,
+        "name" : "张三"
+    },
+    {"src":"http://mp3.djwma.com/mp3/欢快旋律电鼓享受顶级潮流魅力舞曲.mp3" ,
+        "title" :  "歌曲2" ,
+        "name" : "李四"
+    },
+    {"src":"http://mp3.djwma.com/mp3/欢快女唱唯有独特才能出众走红全网.mp3" ,
+        "title" :  "歌曲3" ,
+        "name" : "王五"
+    }
+]
